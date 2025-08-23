@@ -1,0 +1,63 @@
+[2025-08-22T05:06:52.887+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-08-22T05:06:52.910+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_pipeline_bi.aggregate_kpi_to_bi manual__2025-08-22T05:03:53+00:00 [queued]>
+[2025-08-22T05:06:52.922+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_pipeline_bi.aggregate_kpi_to_bi manual__2025-08-22T05:03:53+00:00 [queued]>
+[2025-08-22T05:06:52.923+0000] {taskinstance.py:2856} INFO - Starting attempt 2 of 2
+[2025-08-22T05:06:52.943+0000] {taskinstance.py:2879} INFO - Executing <Task(PostgresOperator): aggregate_kpi_to_bi> on 2025-08-22 05:03:53+00:00
+[2025-08-22T05:06:52.955+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=1682) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-08-22T05:06:52.959+0000] {standard_task_runner.py:72} INFO - Started process 1686 to run task
+[2025-08-22T05:06:52.961+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_pipeline_bi', 'aggregate_kpi_to_bi', 'manual__2025-08-22T05:03:53+00:00', '--job-id', '30', '--raw', '--subdir', 'DAGS_FOLDER/etl_pipeline_bi.py', '--cfg-path', '/tmp/tmpaueax072']
+[2025-08-22T05:06:52.966+0000] {standard_task_runner.py:105} INFO - Job 30: Subtask aggregate_kpi_to_bi
+[2025-08-22T05:06:53.037+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_pipeline_bi.aggregate_kpi_to_bi manual__2025-08-22T05:03:53+00:00 [running]> on host 21c40e4c1785
+[2025-08-22T05:06:53.162+0000] {taskinstance.py:3122} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='etl_pipeline_bi' AIRFLOW_CTX_TASK_ID='aggregate_kpi_to_bi' AIRFLOW_CTX_EXECUTION_DATE='2025-08-22T05:03:53+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-22T05:03:53+00:00'
+[2025-08-22T05:06:53.163+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-08-22T05:06:53.185+0000] {sql.py:282} INFO - Executing: 
+        -- 매번 DAG가 실행될 때마다 테이블을 새로 생성
+        DROP TABLE IF EXISTS bi.shipbuilding_kpi_summary;
+
+        CREATE TABLE bi.shipbuilding_kpi_summary AS
+        SELECT
+            ship_type,
+            COUNT(project_id) as total_orders,
+            SUM(order_value) as total_order_value,
+            AVG(build_duration_days) as avg_build_duration_days
+        FROM (
+            SELECT * FROM mart.container_ships_clean
+            UNION ALL
+            SELECT * FROM mart.drill_ships_clean
+            UNION ALL
+            SELECT * FROM mart.submarines_clean
+        ) AS combined_mart_data
+        GROUP BY ship_type;
+        
+[2025-08-22T05:06:53.198+0000] {base.py:84} INFO - Retrieving connection 'datalake_1'
+[2025-08-22T05:06:53.213+0000] {base.py:84} INFO - Retrieving connection 'datalake_1'
+[2025-08-22T05:06:53.244+0000] {sql.py:509} INFO - Running statement: 
+        -- 매번 DAG가 실행될 때마다 테이블을 새로 생성
+        DROP TABLE IF EXISTS bi.shipbuilding_kpi_summary;
+
+        CREATE TABLE bi.shipbuilding_kpi_summary AS
+        SELECT
+            ship_type,
+            COUNT(project_id) as total_orders,
+            SUM(order_value) as total_order_value,
+            AVG(build_duration_days) as avg_build_duration_days
+        FROM (
+            SELECT * FROM mart.container_ships_clean
+            UNION ALL
+            SELECT * FROM mart.drill_ships_clean
+            UNION ALL
+            SELECT * FROM mart.submarines_clean
+        ) AS combined_mart_data
+        GROUP BY ship_type;
+        , parameters: None
+[2025-08-22T05:06:53.249+0000] {sql.py:518} INFO - Rows affected: 3
+[2025-08-22T05:06:53.261+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-08-22T05:06:53.261+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=etl_pipeline_bi, task_id=aggregate_kpi_to_bi, run_id=manual__2025-08-22T05:03:53+00:00, execution_date=20250822T050353, start_date=20250822T050652, end_date=20250822T050653
+[2025-08-22T05:06:53.302+0000] {local_task_job_runner.py:261} INFO - Task exited with return code 0
+[2025-08-22T05:06:53.314+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/models/baseoperator.py:1378: AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `***.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+  result = cls.__new__(cls)
+
+[2025-08-22T05:06:53.322+0000] {taskinstance.py:3891} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-08-22T05:06:53.324+0000] {local_task_job_runner.py:240} INFO - ::endgroup::

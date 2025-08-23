@@ -1,0 +1,7 @@
+streamlit
+pandas
+folium
+sqlalchemy
+plotly
+psycopg2-binary
+streamlit_folium

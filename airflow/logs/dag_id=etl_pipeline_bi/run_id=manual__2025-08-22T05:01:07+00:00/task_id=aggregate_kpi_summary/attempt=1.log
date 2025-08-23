@@ -1,0 +1,105 @@
+[2025-08-22T05:01:14.448+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-08-22T05:01:14.471+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_pipeline_bi.aggregate_kpi_summary manual__2025-08-22T05:01:07+00:00 [queued]>
+[2025-08-22T05:01:14.482+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_pipeline_bi.aggregate_kpi_summary manual__2025-08-22T05:01:07+00:00 [queued]>
+[2025-08-22T05:01:14.483+0000] {taskinstance.py:2856} INFO - Starting attempt 1 of 1
+[2025-08-22T05:01:14.500+0000] {taskinstance.py:2879} INFO - Executing <Task(PostgresOperator): aggregate_kpi_summary> on 2025-08-22 05:01:07+00:00
+[2025-08-22T05:01:14.525+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=1568) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-08-22T05:01:14.529+0000] {standard_task_runner.py:72} INFO - Started process 1574 to run task
+[2025-08-22T05:01:14.546+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_pipeline_bi', 'aggregate_kpi_summary', 'manual__2025-08-22T05:01:07+00:00', '--job-id', '20', '--raw', '--subdir', 'DAGS_FOLDER/etl_pipeline_bi.py', '--cfg-path', '/tmp/tmpqb09r8w7']
+[2025-08-22T05:01:14.567+0000] {standard_task_runner.py:105} INFO - Job 20: Subtask aggregate_kpi_summary
+[2025-08-22T05:01:14.680+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_pipeline_bi.aggregate_kpi_summary manual__2025-08-22T05:01:07+00:00 [running]> on host 21c40e4c1785
+[2025-08-22T05:01:14.912+0000] {taskinstance.py:3122} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='etl_pipeline_bi' AIRFLOW_CTX_TASK_ID='aggregate_kpi_summary' AIRFLOW_CTX_EXECUTION_DATE='2025-08-22T05:01:07+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-22T05:01:07+00:00'
+[2025-08-22T05:01:14.914+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-08-22T05:01:14.935+0000] {sql.py:282} INFO - Executing: 
+        -- 주요 KPI 요약 테이블을 생성합니다.
+        DROP TABLE IF EXISTS bi.shipbuilding_kpi_summary;
+
+        CREATE TABLE bi.shipbuilding_kpi_summary AS
+        SELECT
+            customer_country_cleaned,
+            ship_type,
+            COUNT(project_id) AS total_orders,
+            SUM(order_value) AS total_order_value,
+            AVG(order_value) AS avg_order_value,
+            AVG(build_duration_days) AS avg_build_duration_days
+        FROM (
+            SELECT
+                project_id,
+                ship_type,
+                customer_country_cleaned,
+                order_value,
+                build_duration_days
+            FROM mart.container_ships_clean
+            UNION ALL
+            SELECT
+                project_id,
+                ship_type,
+                customer_country_cleaned,
+                order_value,
+                build_duration_days
+            FROM mart.drill_ships_clean
+            UNION ALL
+            SELECT
+                project_id,
+                ship_type,
+                customer_country_cleaned,
+                order_value,
+                build_duration_days
+            FROM mart.submarines_clean
+        ) AS unified_data
+        GROUP BY customer_country_cleaned, ship_type
+        ORDER BY total_order_value DESC;
+        
+[2025-08-22T05:01:14.956+0000] {base.py:84} INFO - Retrieving connection 'datalake_1'
+[2025-08-22T05:01:14.976+0000] {base.py:84} INFO - Retrieving connection 'datalake_1'
+[2025-08-22T05:01:15.016+0000] {sql.py:509} INFO - Running statement: 
+        -- 주요 KPI 요약 테이블을 생성합니다.
+        DROP TABLE IF EXISTS bi.shipbuilding_kpi_summary;
+
+        CREATE TABLE bi.shipbuilding_kpi_summary AS
+        SELECT
+            customer_country_cleaned,
+            ship_type,
+            COUNT(project_id) AS total_orders,
+            SUM(order_value) AS total_order_value,
+            AVG(order_value) AS avg_order_value,
+            AVG(build_duration_days) AS avg_build_duration_days
+        FROM (
+            SELECT
+                project_id,
+                ship_type,
+                customer_country_cleaned,
+                order_value,
+                build_duration_days
+            FROM mart.container_ships_clean
+            UNION ALL
+            SELECT
+                project_id,
+                ship_type,
+                customer_country_cleaned,
+                order_value,
+                build_duration_days
+            FROM mart.drill_ships_clean
+            UNION ALL
+            SELECT
+                project_id,
+                ship_type,
+                customer_country_cleaned,
+                order_value,
+                build_duration_days
+            FROM mart.submarines_clean
+        ) AS unified_data
+        GROUP BY customer_country_cleaned, ship_type
+        ORDER BY total_order_value DESC;
+        , parameters: None
+[2025-08-22T05:01:15.036+0000] {sql.py:518} INFO - Rows affected: 15
+[2025-08-22T05:01:15.062+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-08-22T05:01:15.063+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=etl_pipeline_bi, task_id=aggregate_kpi_summary, run_id=manual__2025-08-22T05:01:07+00:00, execution_date=20250822T050107, start_date=20250822T050114, end_date=20250822T050115
+[2025-08-22T05:01:15.201+0000] {local_task_job_runner.py:261} INFO - Task exited with return code 0
+[2025-08-22T05:01:15.234+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/models/baseoperator.py:1378: AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `***.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+  result = cls.__new__(cls)
+
+[2025-08-22T05:01:15.259+0000] {taskinstance.py:3891} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-08-22T05:01:15.263+0000] {local_task_job_runner.py:240} INFO - ::endgroup::

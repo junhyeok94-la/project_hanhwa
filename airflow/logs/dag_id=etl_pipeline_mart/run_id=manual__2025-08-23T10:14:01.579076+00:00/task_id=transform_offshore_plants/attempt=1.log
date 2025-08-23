@@ -1,0 +1,79 @@
+[2025-08-23T10:14:07.549+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-08-23T10:14:07.789+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_pipeline_mart.transform_offshore_plants manual__2025-08-23T10:14:01.579076+00:00 [queued]>
+[2025-08-23T10:14:07.798+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_pipeline_mart.transform_offshore_plants manual__2025-08-23T10:14:01.579076+00:00 [queued]>
+[2025-08-23T10:14:07.799+0000] {taskinstance.py:2856} INFO - Starting attempt 1 of 1
+[2025-08-23T10:14:07.812+0000] {taskinstance.py:2879} INFO - Executing <Task(PostgresOperator): transform_offshore_plants> on 2025-08-23 10:14:01.579076+00:00
+[2025-08-23T10:14:07.834+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=74) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-08-23T10:14:07.836+0000] {standard_task_runner.py:72} INFO - Started process 76 to run task
+[2025-08-23T10:14:07.837+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_pipeline_mart', 'transform_offshore_plants', 'manual__2025-08-23T10:14:01.579076+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/etl_pipeline_mart.py', '--cfg-path', '/tmp/tmp71aqulu1']
+[2025-08-23T10:14:07.840+0000] {standard_task_runner.py:105} INFO - Job 11: Subtask transform_offshore_plants
+[2025-08-23T10:14:07.890+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_pipeline_mart.transform_offshore_plants manual__2025-08-23T10:14:01.579076+00:00 [running]> on host 1a0ff63928d4
+[2025-08-23T10:14:07.981+0000] {taskinstance.py:3122} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='etl_pipeline_mart' AIRFLOW_CTX_TASK_ID='transform_offshore_plants' AIRFLOW_CTX_EXECUTION_DATE='2025-08-23T10:14:01.579076+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-23T10:14:01.579076+00:00'
+[2025-08-23T10:14:07.982+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-08-23T10:14:08.003+0000] {sql.py:282} INFO - Executing: 
+        DROP TABLE IF EXISTS mart.offshore_plants_clean;
+
+        CREATE TABLE mart.offshore_plants_clean AS
+        SELECT
+            op.project_id,
+            op.contract_date,
+            op.business_unit,
+            op.product_type,
+            op.country,
+            CAST(op.revenue AS BIGINT) AS revenue,
+            CAST(op.build_duration_days AS INTEGER) AS build_duration_days,
+            op.delivery_date,
+            op.stage_progress,
+            op.well_depth_meters,
+            op.drilling_rig_type,
+            op.drilling_duration_days,
+            pm.product_description,
+            cm.continent,
+            cm.geo_region,
+            op.latitude,
+            op.longitude,
+            '2025-08-23'::date AS etl_dtm
+        FROM stg.offshore_plants_stg AS op
+        LEFT JOIN stg.product_master_stg AS pm ON op.product_type = pm.product_type
+        LEFT JOIN stg.country_master_stg AS cm ON op.country = cm.country;
+        
+[2025-08-23T10:14:08.013+0000] {base.py:84} INFO - Retrieving connection 'datalake_1'
+[2025-08-23T10:14:08.023+0000] {base.py:84} INFO - Retrieving connection 'datalake_1'
+[2025-08-23T10:14:08.048+0000] {sql.py:509} INFO - Running statement: 
+        DROP TABLE IF EXISTS mart.offshore_plants_clean;
+
+        CREATE TABLE mart.offshore_plants_clean AS
+        SELECT
+            op.project_id,
+            op.contract_date,
+            op.business_unit,
+            op.product_type,
+            op.country,
+            CAST(op.revenue AS BIGINT) AS revenue,
+            CAST(op.build_duration_days AS INTEGER) AS build_duration_days,
+            op.delivery_date,
+            op.stage_progress,
+            op.well_depth_meters,
+            op.drilling_rig_type,
+            op.drilling_duration_days,
+            pm.product_description,
+            cm.continent,
+            cm.geo_region,
+            op.latitude,
+            op.longitude,
+            '2025-08-23'::date AS etl_dtm
+        FROM stg.offshore_plants_stg AS op
+        LEFT JOIN stg.product_master_stg AS pm ON op.product_type = pm.product_type
+        LEFT JOIN stg.country_master_stg AS cm ON op.country = cm.country;
+        , parameters: None
+[2025-08-23T10:14:08.053+0000] {sql.py:518} INFO - Rows affected: 332
+[2025-08-23T10:14:08.065+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-08-23T10:14:08.065+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=etl_pipeline_mart, task_id=transform_offshore_plants, run_id=manual__2025-08-23T10:14:01.579076+00:00, execution_date=20250823T101401, start_date=20250823T101407, end_date=20250823T101408
+[2025-08-23T10:14:08.093+0000] {local_task_job_runner.py:261} INFO - Task exited with return code 0
+[2025-08-23T10:14:08.103+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/models/baseoperator.py:1378: AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `***.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+  result = cls.__new__(cls)
+
+[2025-08-23T10:14:08.118+0000] {taskinstance.py:3891} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-08-23T10:14:08.119+0000] {local_task_job_runner.py:240} INFO - ::endgroup::

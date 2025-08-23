@@ -1,0 +1,11 @@
+[2025-08-20T14:41:57.688+0000] {processor.py:186} INFO - Started process (PID=112) to work on /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_dynamic_task_mapping.py
+[2025-08-20T14:41:57.689+0000] {processor.py:914} INFO - Processing file /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_dynamic_task_mapping.py for tasks to queue
+[2025-08-20T14:41:57.708+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:41:57.708+0000] {dagbag.py:587} INFO - Filling up the DagBag from /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_dynamic_task_mapping.py
+[2025-08-20T14:41:57.845+0000] {processor.py:925} INFO - DAG(s) 'example_dynamic_task_mapping' retrieved from /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_dynamic_task_mapping.py
+[2025-08-20T14:41:59.061+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:41:59.060+0000] {override.py:1858} INFO - Created Permission View: can delete on DAG:example_dynamic_task_mapping
+[2025-08-20T14:41:59.120+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:41:59.119+0000] {override.py:1858} INFO - Created Permission View: can edit on DAG:example_dynamic_task_mapping
+[2025-08-20T14:41:59.160+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:41:59.159+0000] {override.py:1858} INFO - Created Permission View: can read on DAG:example_dynamic_task_mapping
+[2025-08-20T14:41:59.164+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:41:59.163+0000] {dag.py:3211} INFO - Sync 1 DAGs
+[2025-08-20T14:41:59.271+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:41:59.271+0000] {dag.py:3234} INFO - Creating ORM DAG for example_dynamic_task_mapping
+[2025-08-20T14:41:59.326+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:41:59.324+0000] {dag.py:4138} INFO - Setting next_dagrun for example_dynamic_task_mapping to 2022-03-04 00:00:00+00:00, run_after=2022-03-05 00:00:00+00:00
+[2025-08-20T14:41:59.413+0000] {processor.py:208} INFO - Processing /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_dynamic_task_mapping.py took 1.816 seconds

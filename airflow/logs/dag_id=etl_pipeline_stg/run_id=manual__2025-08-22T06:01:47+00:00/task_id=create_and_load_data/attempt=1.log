@@ -1,0 +1,24 @@
+[2025-08-22T06:07:17.087+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-08-22T06:07:17.114+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_pipeline_stg.create_and_load_data manual__2025-08-22T06:01:47+00:00 [queued]>
+[2025-08-22T06:07:17.125+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_pipeline_stg.create_and_load_data manual__2025-08-22T06:01:47+00:00 [queued]>
+[2025-08-22T06:07:17.125+0000] {taskinstance.py:2856} INFO - Starting attempt 1 of 1
+[2025-08-22T06:07:17.146+0000] {taskinstance.py:2879} INFO - Executing <Task(PythonOperator): create_and_load_data> on 2025-08-22 06:01:47+00:00
+[2025-08-22T06:07:17.162+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=2559) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-08-22T06:07:17.164+0000] {standard_task_runner.py:72} INFO - Started process 2561 to run task
+[2025-08-22T06:07:17.168+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_pipeline_stg', 'create_and_load_data', 'manual__2025-08-22T06:01:47+00:00', '--job-id', '56', '--raw', '--subdir', 'DAGS_FOLDER/etl_pipeline_stg.py', '--cfg-path', '/tmp/tmpf2ks3j5l']
+[2025-08-22T06:07:17.171+0000] {standard_task_runner.py:105} INFO - Job 56: Subtask create_and_load_data
+[2025-08-22T06:07:17.250+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_pipeline_stg.create_and_load_data manual__2025-08-22T06:01:47+00:00 [running]> on host 21c40e4c1785
+[2025-08-22T06:07:17.727+0000] {taskinstance.py:3122} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='etl_pipeline_stg' AIRFLOW_CTX_TASK_ID='create_and_load_data' AIRFLOW_CTX_EXECUTION_DATE='2025-08-22T06:01:47+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-22T06:01:47+00:00'
+[2025-08-22T06:07:17.729+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-08-22T06:07:17.836+0000] {base.py:84} INFO - Retrieving connection 'datalake_1'
+[2025-08-22T06:07:18.045+0000] {logging_mixin.py:190} INFO - Data loaded to STG schema for special_ships in table 'special_ships_stg' successfully.
+[2025-08-22T06:07:18.216+0000] {logging_mixin.py:190} INFO - Data loaded to STG schema for merchant_ships in table 'merchant_ships_stg' successfully.
+[2025-08-22T06:07:18.339+0000] {logging_mixin.py:190} INFO - Data loaded to STG schema for offshore_plants in table 'offshore_plants_stg' successfully.
+[2025-08-22T06:07:18.341+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-08-22T06:07:18.378+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-08-22T06:07:18.381+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=etl_pipeline_stg, task_id=create_and_load_data, run_id=manual__2025-08-22T06:01:47+00:00, execution_date=20250822T060147, start_date=20250822T060717, end_date=20250822T060718
+[2025-08-22T06:07:18.481+0000] {local_task_job_runner.py:261} INFO - Task exited with return code 0
+[2025-08-22T06:07:18.531+0000] {taskinstance.py:3891} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-08-22T06:07:18.535+0000] {local_task_job_runner.py:240} INFO - ::endgroup::

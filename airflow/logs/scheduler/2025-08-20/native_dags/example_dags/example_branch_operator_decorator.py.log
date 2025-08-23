@@ -1,0 +1,11 @@
+[2025-08-20T14:40:10.586+0000] {processor.py:186} INFO - Started process (PID=109) to work on /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_branch_operator_decorator.py
+[2025-08-20T14:40:10.588+0000] {processor.py:914} INFO - Processing file /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_branch_operator_decorator.py for tasks to queue
+[2025-08-20T14:40:10.593+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:40:10.592+0000] {dagbag.py:587} INFO - Filling up the DagBag from /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_branch_operator_decorator.py
+[2025-08-20T14:40:10.765+0000] {processor.py:925} INFO - DAG(s) 'example_branch_python_operator_decorator' retrieved from /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_branch_operator_decorator.py
+[2025-08-20T14:40:11.682+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:40:11.667+0000] {override.py:1858} INFO - Created Permission View: can delete on DAG:example_branch_python_operator_decorator
+[2025-08-20T14:40:11.731+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:40:11.731+0000] {override.py:1858} INFO - Created Permission View: can edit on DAG:example_branch_python_operator_decorator
+[2025-08-20T14:40:11.744+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:40:11.743+0000] {override.py:1858} INFO - Created Permission View: can read on DAG:example_branch_python_operator_decorator
+[2025-08-20T14:40:11.745+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:40:11.744+0000] {dag.py:3211} INFO - Sync 1 DAGs
+[2025-08-20T14:40:11.827+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:40:11.826+0000] {dag.py:3234} INFO - Creating ORM DAG for example_branch_python_operator_decorator
+[2025-08-20T14:40:11.902+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:40:11.900+0000] {dag.py:4138} INFO - Setting next_dagrun for example_branch_python_operator_decorator to 2025-08-19 00:00:00+00:00, run_after=2025-08-20 00:00:00+00:00
+[2025-08-20T14:40:12.059+0000] {processor.py:208} INFO - Processing /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_branch_operator_decorator.py took 1.499 seconds

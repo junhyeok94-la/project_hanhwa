@@ -1,0 +1,71 @@
+[2025-08-22T06:13:16.333+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-08-22T06:13:16.377+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_pipeline_mart.transform_special_ships manual__2025-08-22T06:02:06+00:00 [queued]>
+[2025-08-22T06:13:16.388+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_pipeline_mart.transform_special_ships manual__2025-08-22T06:02:06+00:00 [queued]>
+[2025-08-22T06:13:16.389+0000] {taskinstance.py:2856} INFO - Starting attempt 3 of 3
+[2025-08-22T06:13:16.420+0000] {taskinstance.py:2879} INFO - Executing <Task(PostgresOperator): transform_special_ships> on 2025-08-22 06:02:06+00:00
+[2025-08-22T06:13:16.449+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=2651) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-08-22T06:13:16.452+0000] {standard_task_runner.py:72} INFO - Started process 2662 to run task
+[2025-08-22T06:13:16.458+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_pipeline_mart', 'transform_special_ships', 'manual__2025-08-22T06:02:06+00:00', '--job-id', '61', '--raw', '--subdir', 'DAGS_FOLDER/etl_pipeline_mart.py', '--cfg-path', '/tmp/tmpbt6aquzh']
+[2025-08-22T06:13:16.462+0000] {standard_task_runner.py:105} INFO - Job 61: Subtask transform_special_ships
+[2025-08-22T06:13:16.616+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_pipeline_mart.transform_special_ships manual__2025-08-22T06:02:06+00:00 [running]> on host 21c40e4c1785
+[2025-08-22T06:13:16.939+0000] {taskinstance.py:3122} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='etl_pipeline_mart' AIRFLOW_CTX_TASK_ID='transform_special_ships' AIRFLOW_CTX_EXECUTION_DATE='2025-08-22T06:02:06+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-22T06:02:06+00:00'
+[2025-08-22T06:13:16.940+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-08-22T06:13:16.998+0000] {sql.py:282} INFO - Executing: 
+        DROP TABLE IF EXISTS mart.special_ships_clean;
+
+        CREATE TABLE mart.special_ships_clean AS
+        SELECT
+            project_id,
+            contract_date,
+            business_unit,
+            product_type,
+            country,
+            CAST(revenue AS BIGINT) AS revenue,
+            CAST(build_duration_days AS INTEGER) AS build_duration_days,
+            delivery_date,
+            stage_progress,
+            geopolitical_risk_index,
+            mro_contract_revenue,
+            patrol_days_per_maintenance_cycle,
+            model_type,
+            fleet_size,
+            -- 현재 날짜를 etl_dtm으로 추가합니다.
+            '2025-08-22'::date AS etl_dtm
+        FROM stg.special_ships_stg;
+        
+[2025-08-22T06:13:17.030+0000] {base.py:84} INFO - Retrieving connection 'datalake_1'
+[2025-08-22T06:13:17.063+0000] {base.py:84} INFO - Retrieving connection 'datalake_1'
+[2025-08-22T06:13:17.114+0000] {sql.py:509} INFO - Running statement: 
+        DROP TABLE IF EXISTS mart.special_ships_clean;
+
+        CREATE TABLE mart.special_ships_clean AS
+        SELECT
+            project_id,
+            contract_date,
+            business_unit,
+            product_type,
+            country,
+            CAST(revenue AS BIGINT) AS revenue,
+            CAST(build_duration_days AS INTEGER) AS build_duration_days,
+            delivery_date,
+            stage_progress,
+            geopolitical_risk_index,
+            mro_contract_revenue,
+            patrol_days_per_maintenance_cycle,
+            model_type,
+            fleet_size,
+            -- 현재 날짜를 etl_dtm으로 추가합니다.
+            '2025-08-22'::date AS etl_dtm
+        FROM stg.special_ships_stg;
+        , parameters: None
+[2025-08-22T06:13:17.124+0000] {sql.py:518} INFO - Rows affected: 346
+[2025-08-22T06:13:17.160+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-08-22T06:13:17.161+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=etl_pipeline_mart, task_id=transform_special_ships, run_id=manual__2025-08-22T06:02:06+00:00, execution_date=20250822T060206, start_date=20250822T061316, end_date=20250822T061317
+[2025-08-22T06:13:17.244+0000] {local_task_job_runner.py:261} INFO - Task exited with return code 0
+[2025-08-22T06:13:17.278+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/models/baseoperator.py:1378: AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `***.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+  result = cls.__new__(cls)
+
+[2025-08-22T06:13:17.326+0000] {taskinstance.py:3891} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-08-22T06:13:17.336+0000] {local_task_job_runner.py:240} INFO - ::endgroup::

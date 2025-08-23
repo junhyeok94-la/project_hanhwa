@@ -1,0 +1,11 @@
+[2025-08-20T14:42:05.320+0000] {processor.py:186} INFO - Started process (PID=128) to work on /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_kubernetes_executor.py
+[2025-08-20T14:42:05.326+0000] {processor.py:914} INFO - Processing file /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_kubernetes_executor.py for tasks to queue
+[2025-08-20T14:42:05.336+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:42:05.335+0000] {dagbag.py:587} INFO - Filling up the DagBag from /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_kubernetes_executor.py
+[2025-08-20T14:42:05.436+0000] {processor.py:925} INFO - DAG(s) 'example_kubernetes_executor' retrieved from /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_kubernetes_executor.py
+[2025-08-20T14:42:06.154+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:42:06.153+0000] {override.py:1858} INFO - Created Permission View: can delete on DAG:example_kubernetes_executor
+[2025-08-20T14:42:06.203+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:42:06.202+0000] {override.py:1858} INFO - Created Permission View: can edit on DAG:example_kubernetes_executor
+[2025-08-20T14:42:06.237+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:42:06.234+0000] {override.py:1858} INFO - Created Permission View: can read on DAG:example_kubernetes_executor
+[2025-08-20T14:42:06.238+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:42:06.237+0000] {dag.py:3211} INFO - Sync 1 DAGs
+[2025-08-20T14:42:06.325+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:42:06.322+0000] {dag.py:3234} INFO - Creating ORM DAG for example_kubernetes_executor
+[2025-08-20T14:42:06.329+0000] {logging_mixin.py:190} INFO - [2025-08-20T14:42:06.328+0000] {dag.py:4138} INFO - Setting next_dagrun for example_kubernetes_executor to None, run_after=None
+[2025-08-20T14:42:06.417+0000] {processor.py:208} INFO - Processing /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_kubernetes_executor.py took 1.135 seconds

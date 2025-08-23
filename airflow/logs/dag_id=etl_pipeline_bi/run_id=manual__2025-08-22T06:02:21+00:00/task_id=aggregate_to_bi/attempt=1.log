@@ -1,0 +1,211 @@
+[2025-08-22T06:02:28.852+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-08-22T06:02:28.867+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_pipeline_bi.aggregate_to_bi manual__2025-08-22T06:02:21+00:00 [queued]>
+[2025-08-22T06:02:28.874+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_pipeline_bi.aggregate_to_bi manual__2025-08-22T06:02:21+00:00 [queued]>
+[2025-08-22T06:02:28.874+0000] {taskinstance.py:2856} INFO - Starting attempt 1 of 1
+[2025-08-22T06:02:28.886+0000] {taskinstance.py:2879} INFO - Executing <Task(PostgresOperator): aggregate_to_bi> on 2025-08-22 06:02:21+00:00
+[2025-08-22T06:02:28.896+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=2490) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-08-22T06:02:28.898+0000] {standard_task_runner.py:72} INFO - Started process 2492 to run task
+[2025-08-22T06:02:28.899+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_pipeline_bi', 'aggregate_to_bi', 'manual__2025-08-22T06:02:21+00:00', '--job-id', '55', '--raw', '--subdir', 'DAGS_FOLDER/etl_pipeline_bi.py', '--cfg-path', '/tmp/tmpmc4ttkk0']
+[2025-08-22T06:02:28.902+0000] {standard_task_runner.py:105} INFO - Job 55: Subtask aggregate_to_bi
+[2025-08-22T06:02:28.946+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_pipeline_bi.aggregate_to_bi manual__2025-08-22T06:02:21+00:00 [running]> on host 21c40e4c1785
+[2025-08-22T06:02:29.032+0000] {taskinstance.py:3122} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='etl_pipeline_bi' AIRFLOW_CTX_TASK_ID='aggregate_to_bi' AIRFLOW_CTX_EXECUTION_DATE='2025-08-22T06:02:21+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-22T06:02:21+00:00'
+[2025-08-22T06:02:29.033+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-08-22T06:02:29.053+0000] {sql.py:282} INFO - Executing: 
+        -- 매번 DAG가 실행될 때마다 테이블을 새로 생성
+        DROP TABLE IF EXISTS bi.all_ship_data_bi;
+
+        CREATE TABLE bi.all_ship_data_bi AS
+        -- 상선 데이터 통합
+        SELECT
+            project_id,
+            contract_date,
+            business_unit,
+            product_type,
+            country,
+            revenue,
+            build_duration_days,
+            delivery_date,
+            stage_progress,
+            global_freight_index,
+            vessel_utilization_rate,
+            weather_risk_index,
+            recommended_route_score,
+            NULL::INTEGER AS well_depth_meters,
+            NULL::TEXT AS drilling_rig_type,
+            NULL::INTEGER AS drilling_duration_days,
+            NULL::FLOAT AS geopolitical_risk_index,
+            NULL::BIGINT AS mro_contract_revenue,
+            NULL::INTEGER AS patrol_days_per_maintenance_cycle,
+            NULL::TEXT AS model_type,
+            NULL::INTEGER AS fleet_size,
+            latitude,
+            longitude
+        FROM mart.merchant_ships_clean
+        WHERE contract_date BETWEEN '2024-01-01 00:00:00' AND '2025-08-22 00:00:00'
+
+        UNION ALL
+
+        -- 해양플랜트 데이터 통합
+        SELECT
+            project_id,
+            contract_date,
+            business_unit,
+            product_type,
+            country,
+            revenue,
+            build_duration_days,
+            delivery_date,
+            stage_progress,
+            NULL::FLOAT AS global_freight_index,
+            NULL::FLOAT AS vessel_utilization_rate,
+            NULL::INTEGER AS weather_risk_index,
+            NULL::INTEGER AS recommended_route_score,
+            well_depth_meters,
+            drilling_rig_type,
+            drilling_duration_days,
+            NULL::FLOAT AS geopolitical_risk_index,
+            NULL::BIGINT AS mro_contract_revenue,
+            NULL::INTEGER AS patrol_days_per_maintenance_cycle,
+            NULL::TEXT AS model_type,
+            NULL::INTEGER AS fleet_size,
+            latitude,
+            longitude
+        FROM mart.offshore_plants_clean
+        WHERE contract_date BETWEEN '2024-01-01 00:00:00' AND '2025-08-22 00:00:00'
+
+        UNION ALL
+
+        -- 특수선 데이터 통합
+        SELECT
+            project_id,
+            contract_date,
+            business_unit,
+            product_type,
+            country,
+            revenue,
+            build_duration_days,
+            delivery_date,
+            stage_progress,
+            NULL::FLOAT AS global_freight_index,
+            NULL::FLOAT AS vessel_utilization_rate,
+            NULL::INTEGER AS weather_risk_index,
+            NULL::INTEGER AS recommended_route_score,
+            NULL::INTEGER AS well_depth_meters,
+            NULL::TEXT AS drilling_rig_type,
+            NULL::INTEGER AS drilling_duration_days,
+            geopolitical_risk_index,
+            mro_contract_revenue,
+            patrol_days_per_maintenance_cycle,
+            model_type,
+            fleet_size,
+            NULL::FLOAT AS latitude,
+            NULL::FLOAT AS longitude
+        FROM mart.special_ships_clean
+        WHERE contract_date BETWEEN '2024-01-01 00:00:00' AND '2025-08-22 00:00:00';
+        
+[2025-08-22T06:02:29.067+0000] {base.py:84} INFO - Retrieving connection 'datalake_1'
+[2025-08-22T06:02:29.079+0000] {base.py:84} INFO - Retrieving connection 'datalake_1'
+[2025-08-22T06:02:29.107+0000] {sql.py:509} INFO - Running statement: 
+        -- 매번 DAG가 실행될 때마다 테이블을 새로 생성
+        DROP TABLE IF EXISTS bi.all_ship_data_bi;
+
+        CREATE TABLE bi.all_ship_data_bi AS
+        -- 상선 데이터 통합
+        SELECT
+            project_id,
+            contract_date,
+            business_unit,
+            product_type,
+            country,
+            revenue,
+            build_duration_days,
+            delivery_date,
+            stage_progress,
+            global_freight_index,
+            vessel_utilization_rate,
+            weather_risk_index,
+            recommended_route_score,
+            NULL::INTEGER AS well_depth_meters,
+            NULL::TEXT AS drilling_rig_type,
+            NULL::INTEGER AS drilling_duration_days,
+            NULL::FLOAT AS geopolitical_risk_index,
+            NULL::BIGINT AS mro_contract_revenue,
+            NULL::INTEGER AS patrol_days_per_maintenance_cycle,
+            NULL::TEXT AS model_type,
+            NULL::INTEGER AS fleet_size,
+            latitude,
+            longitude
+        FROM mart.merchant_ships_clean
+        WHERE contract_date BETWEEN '2024-01-01 00:00:00' AND '2025-08-22 00:00:00'
+
+        UNION ALL
+
+        -- 해양플랜트 데이터 통합
+        SELECT
+            project_id,
+            contract_date,
+            business_unit,
+            product_type,
+            country,
+            revenue,
+            build_duration_days,
+            delivery_date,
+            stage_progress,
+            NULL::FLOAT AS global_freight_index,
+            NULL::FLOAT AS vessel_utilization_rate,
+            NULL::INTEGER AS weather_risk_index,
+            NULL::INTEGER AS recommended_route_score,
+            well_depth_meters,
+            drilling_rig_type,
+            drilling_duration_days,
+            NULL::FLOAT AS geopolitical_risk_index,
+            NULL::BIGINT AS mro_contract_revenue,
+            NULL::INTEGER AS patrol_days_per_maintenance_cycle,
+            NULL::TEXT AS model_type,
+            NULL::INTEGER AS fleet_size,
+            latitude,
+            longitude
+        FROM mart.offshore_plants_clean
+        WHERE contract_date BETWEEN '2024-01-01 00:00:00' AND '2025-08-22 00:00:00'
+
+        UNION ALL
+
+        -- 특수선 데이터 통합
+        SELECT
+            project_id,
+            contract_date,
+            business_unit,
+            product_type,
+            country,
+            revenue,
+            build_duration_days,
+            delivery_date,
+            stage_progress,
+            NULL::FLOAT AS global_freight_index,
+            NULL::FLOAT AS vessel_utilization_rate,
+            NULL::INTEGER AS weather_risk_index,
+            NULL::INTEGER AS recommended_route_score,
+            NULL::INTEGER AS well_depth_meters,
+            NULL::TEXT AS drilling_rig_type,
+            NULL::INTEGER AS drilling_duration_days,
+            geopolitical_risk_index,
+            mro_contract_revenue,
+            patrol_days_per_maintenance_cycle,
+            model_type,
+            fleet_size,
+            NULL::FLOAT AS latitude,
+            NULL::FLOAT AS longitude
+        FROM mart.special_ships_clean
+        WHERE contract_date BETWEEN '2024-01-01 00:00:00' AND '2025-08-22 00:00:00';
+        , parameters: None
+[2025-08-22T06:02:29.114+0000] {sql.py:518} INFO - Rows affected: 1000
+[2025-08-22T06:02:29.125+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-08-22T06:02:29.125+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=etl_pipeline_bi, task_id=aggregate_to_bi, run_id=manual__2025-08-22T06:02:21+00:00, execution_date=20250822T060221, start_date=20250822T060228, end_date=20250822T060229
+[2025-08-22T06:02:29.155+0000] {local_task_job_runner.py:261} INFO - Task exited with return code 0
+[2025-08-22T06:02:29.164+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/models/baseoperator.py:1378: AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `***.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+  result = cls.__new__(cls)
+
+[2025-08-22T06:02:29.173+0000] {taskinstance.py:3891} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-08-22T06:02:29.174+0000] {local_task_job_runner.py:240} INFO - ::endgroup::
