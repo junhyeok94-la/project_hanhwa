@@ -80,5 +80,5 @@
 
 1. **대시보드 접속**: 웹 브라우저에서 아래 URL로 접속하여 Streamlit 대시보드를 확인합니다. (Nginx 설정에 따라 포트가 다를 수 있습니다.)  
    * http://3.36.22.226:8501  
-2. **Airflow 접속**: 웹 브라우저에서 아래 URL로 접속하여 Airflow 웹 UI에서 DAG를 관리합니다.  
+2. **Airflow 접속**: 웹 브라우저에서 아래 URL로 접속하여 Airflow 웹 UI에서 DAG를 관리합니다. (id: user / pw: user01!@ )
    * http://3.36.22.226:8080
