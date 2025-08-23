@@ -73,12 +73,12 @@
 
 * **Docker 컨테이너 오케스트레이션**: docker-compose를 사용하여 Airflow 클러스터, PostgreSQL, Redis, Streamlit, Nginx 등 복잡한 다중 컨테이너 환경을 간편하게 구축했습니다.  
 * **성능 개선 (Celery)**: EC2 자원이 작아 초기 Airflow Worker가 높은 기본 동시성 설정(concurrency=16)으로 인해 시스템 리소스(특히 메모리)를 과도하게 소모하여 성능 저하 문제가 발생했습니다. **AIRFLOW\_\_CELERY\_\_WORKER\_CONCURRENCY 환경 변수를 2로 조정**하여 리소스 사용량을 안정화하고 태스크 처리량을 개선했습니다.   
-  후에는 워커의 프로세스별로 리소스 제한 옵션을 적용하여 프로세스 별 메모리 사용량 제한 값을 넘어설 경우 process recycle 하도록 적용할 예정입니다. (MAX\_CHILD)  
+  후에는 워커의 프로세스별로 리소스 제한 옵션을 적용하여 프로세스 별 메모리 사용량 제한 값을 넘어설 경우 process recycle 하도록 적용할 예정입니다.
 * **안정성 확보 (Health Check)**: 각 서비스(PostgreSQL, Redis, Airflow)에 healthcheck를 추가하여 컨테이너의 상태를 지속적으로 모니터링하고, 서비스 간의 올바른 시작 순서를 보장했습니다. 특히 airflow-init 서비스가 PostgreSQL의 준비 상태를 확인한 후에만 데이터베이스 초기화를 진행하도록 하여 컨테이너 시작 실패 문제를 근본적으로 해결했습니다.
 
 ## **실행 방법**
 
 1. **대시보드 접속**: 웹 브라우저에서 아래 URL로 접속하여 Streamlit 대시보드를 확인합니다. (Nginx 설정에 따라 포트가 다를 수 있습니다.)  
    * http://3.36.22.226:8501  
-2. **Airflow 접속**: 웹 브라우저에서 아래 URL로 접속하여 Airflow 웹 UI에서 DAG를 관리합니다. (id: user / pw: user01!@ )
+2. **Airflow 접속**: 웹 브라우저에서 아래 URL로 접속하여 Airflow 웹 UI에서 DAG를 관리합니다. (id: airflow / pw: airflow )
    * http://3.36.22.226:8080
